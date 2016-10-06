@@ -3,7 +3,7 @@ Test program for pre-processing schedule
 """
 import arrow
 
-base = arrow.now()
+base = arrow.utcnow()
 
 def process(raw):
     """
@@ -33,7 +33,7 @@ def process(raw):
         if field == "begin":
             try:
                 base = arrow.get(content, "MM/DD/YYYY")
-                # print("Base date {}".format(base.isoformat()))
+                #print("Base date {}".format(date_begin.isoformat()))
             except:
                 raise ValueError("Unable to parse date {}".format(content))
 
@@ -44,13 +44,19 @@ def process(raw):
             entry['topic'] = ""
             entry['project'] = ""
             entry['week'] = content
+            i = int(content)
+            i -= 1
+            temp = base.replace(weeks=+i)
+            date_string = str(temp.format('MM/DD/YYYY'))
+            entry['date'] = date_string
 
         elif field == 'topic' or field == 'project':
             entry[field] = content
-
+ 
+            
         else:
             raise ValueError("Syntax error in line: {}".format(line))
-
+       
     if entry:
         cooked.append(entry)
 
