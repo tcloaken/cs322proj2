@@ -10,6 +10,7 @@
 
 <body>
 <h1>Schedule</h1>
+<h2>Today is {{ g.today | fmtdate }}</h2>
 
 <table class="class-schedule">
   {% for entry in session.schedule %}
@@ -19,7 +20,11 @@
   <tr class="odd">
   {% endif %}	   
     <td class="week">{{ entry.week }}</td>
-	<td class="date">{{ entry.date}}</td>
+	{% if entry.date | isweek %}
+	<td class="current">{{ entry.date }}</td>
+	{% else %}
+	<td class="date">{{ entry.date }}</td>
+	{% endif %}
     <td class="topic">{{ entry.topic }}</td>
     <td class="project">{{ entry.project}}</td>
   </tr>

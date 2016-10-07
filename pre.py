@@ -4,7 +4,7 @@ Test program for pre-processing schedule
 import arrow
 
 base = arrow.utcnow()
-
+currentDate = arrow.now()
 def process(raw):
     """
     Line by line processing of syllabus file.  Each line that needs
@@ -47,7 +47,7 @@ def process(raw):
             i = int(content)
             i -= 1
             temp = base.replace(weeks=+i)
-            date_string = str(temp.format('MM/DD/YYYY'))
+            date_string = temp.format('ddd MM/DD/YYYY')
             entry['date'] = date_string
 
         elif field == 'topic' or field == 'project':
